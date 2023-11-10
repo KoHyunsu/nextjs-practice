@@ -7,8 +7,9 @@ import RevalidateButton from "@/components/RevalidateButton"
 
 export default async function Home() {
 
-  const res = await getCurrentWeather('seoul')
-  const time = await getTime(res.location.tz_id)
+  const seoulResponse = await getCurrentWeather('seoul')
+  const hochiminhcityResponse = await getCurrentWeather('sgn')
+  const time = await getTime(seoulResponse.location.tz_id)
 
   return (
     <>
@@ -16,14 +17,14 @@ export default async function Home() {
       <h3>{time.dateTime}</h3>
       <ul className={style.list}>
         <li>
-          <Link href="/seoul?name=서울">서울</Link>
-          <span>{res.current.condition.text}</span>
+          <h3><Link href="/seoul?name=서울">서울</Link></h3>
+          <img src={seoulResponse.current.condition.icon} />
+          <h4>{seoulResponse.current.condition.text}</h4>
         </li>
         <li>
-          <Link href="/NYC?name=뉴욕">뉴욕</Link>
-        </li>
-        <li>
-          <Link href="/london?name=런던">런던</Link>
+          <h3><Link href="/sgn?name=호치민시">호치민시</Link></h3>
+          <img src={hochiminhcityResponse.current.condition.icon} />
+          <h4>{hochiminhcityResponse.current.condition.text}</h4>
         </li>
       </ul>
       <RevalidateButton tag={'time'} />
